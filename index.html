@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coming Soon</title>
+  <title>Coming Soon - Apply</title>
   <style>
     body {
       margin: 0;
@@ -25,7 +25,6 @@
       gap: 50px;
     }
 
-    /* Left Side: Intro */
     .intro {
       flex: 1;
       display: flex;
@@ -52,7 +51,6 @@
       to { transform: translateX(0); opacity: 1; }
     }
 
-    /* Right Side: Liquid Glass Card */
     .card {
       flex: 1;
       backdrop-filter: blur(30px) saturate(180%);
@@ -74,7 +72,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Social Icons */
     .social-icons {
       display: flex;
       gap: 20px;
@@ -93,13 +90,12 @@
       filter: brightness(1) invert(0);
     }
 
-    /* Form Styles */
     .form-container {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px; /* exact 18px gap between fields */
+      gap: 18px;
     }
 
     .form-container h2 {
@@ -111,8 +107,8 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center; /* center all fields horizontally */
-      gap: 18px; /* exact 18px gap between fields */
+      align-items: center;
+      gap: 18px;
     }
 
     .form-container input,
@@ -141,7 +137,6 @@
       color: rgba(255,255,255,0.7);
     }
 
-    /* Hover & Focus: VisionOS style */
     .form-container input:hover,
     .form-container textarea:hover,
     .form-container input:focus,
@@ -173,7 +168,6 @@
       transform: translateY(-3px);
     }
 
-    /* Responsive */
     @media (max-width: 900px) {
       .container {
         flex-direction: column;
@@ -184,7 +178,6 @@
 </head>
 <body>
   <div class="container">
-    <!-- Left Side -->
     <div class="intro">
       <h1>Something Powerful Is Coming Soon!</h1>
       <p>
@@ -193,36 +186,60 @@
       </p>
     </div>
 
-    <!-- Right Side Card -->
     <div class="card">
       <div class="social-icons">
-        <a href="https://instagram.com/hirexme" target="_blank" aria-label="Instagram">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" />
-        </a>
-        <a href="https://facebook.com/hirexme" target="_blank" aria-label="Facebook">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" />
-        </a>
-        <a href="https://linkedin.com/in/hirexme" target="_blank" aria-label="LinkedIn">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" />
-        </a>
-        <a href="https://x.com/hirexme" target="_blank" aria-label="X (Twitter)">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X (Twitter)" />
-        </a>
+        <a href="https://instagram.com/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" /></a>
+        <a href="https://facebook.com/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" /></a>
+        <a href="https://linkedin.com/in/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" /></a>
+        <a href="https://x.com/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X (Twitter)" /></a>
       </div>
 
-      <!-- Form with Formsubmit -->
       <div class="form-container">
         <h2>Apply Now</h2>
-        <form action="https://formsubmit.co/careers@hirex.me" method="POST" enctype="multipart/form-data">
+        <form id="jobForm">
           <input type="text" name="name" placeholder="Full Name" required />
           <input type="email" name="email" placeholder="Email Address" required />
           <input type="text" name="position" placeholder="Position You're Applying For" required />
           <textarea name="cover_letter" rows="4" placeholder="Your Cover Letter" required></textarea>
-          <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
+          <input type="file" name="resume" accept=".pdf,.doc,.docx" />
           <button type="submit">Submit Application</button>
         </form>
+        <p id="status" style="margin-top:10px;"></p>
       </div>
     </div>
   </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwIqDipF6IP08qwJBhnmSKRA_gt3ffMnB0h06_Q_gh75d_XF1L2vpdfu11ckXM0oX8k/exec";
+
+    const form = document.getElementById("jobForm");
+    const status = document.getElementById("status");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = new FormData(form);
+      const params = new URLSearchParams();
+      data.forEach((value, key) => {
+        if (key !== "resume") params.append(key, value); // file handled separately
+      });
+
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: "POST",
+          body: params
+        });
+        const result = await response.json();
+        if (result.result === "success") {
+          status.textContent = "Application submitted!";
+          form.reset();
+        } else {
+          status.textContent = "Error: " + result.error;
+        }
+      } catch (err) {
+        status.textContent = "Error submitting form. Try again!";
+      }
+    });
+  </script>
 </body>
 </html>
