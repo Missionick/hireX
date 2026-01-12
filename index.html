@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coming Soon - Apply</title>
+
   <style>
     body {
       margin: 0;
@@ -14,8 +15,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100svh;
     }
 
     .container {
@@ -36,14 +36,13 @@
 
     .intro h1 {
       font-size: 3.5rem;
-      font-weight: bold;
       margin-bottom: 20px;
     }
 
     .intro p {
       font-style: italic;
-      color: #f8f8f8;
       max-width: 500px;
+      color: #f8f8f8;
     }
 
     @keyframes slideInLeft {
@@ -53,17 +52,17 @@
 
     .card {
       flex: 1;
-      backdrop-filter: blur(30px) saturate(180%);
-      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.12);
       border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255,255,255,0.3);
       padding: 40px 35px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 30px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-      animation: fadeIn 1.5s ease forwards;
+      animation: fadeIn 1.2s ease forwards;
       opacity: 0;
     }
 
@@ -75,19 +74,17 @@
     .social-icons {
       display: flex;
       gap: 20px;
-      justify-content: center;
     }
 
-    .social-icons a img {
+    .social-icons img {
       width: 40px;
       height: 40px;
       filter: brightness(0) invert(1);
-      transition: transform 0.3s, filter 0.3s;
+      transition: transform 0.3s ease;
     }
 
-    .social-icons a img:hover {
-      transform: scale(1.3);
-      filter: brightness(1) invert(0);
+    .social-icons img:hover {
+      transform: scale(1.25);
     }
 
     .form-container {
@@ -100,146 +97,166 @@
 
     .form-container h2 {
       font-size: 2rem;
-      margin-bottom: 10px;
     }
 
-    .form-container form {
+    form {
       width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 18px;
+      align-items: center;
     }
 
-    .form-container input,
-    .form-container textarea {
+    input, textarea, button {
       width: 100%;
       max-width: 320px;
       padding: 14px 18px;
-      border-radius: 15px;
-      border: 1px solid rgba(255,255,255,0.3);
-      background: rgba(255,255,255,0.15);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.18);
       color: white;
-      font-size: 1rem;
+      font-size: 16px;
       outline: none;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      transition: all 0.25s ease;
     }
 
-    .form-container input[type="file"] {
-      padding: 10px;
-      background: rgba(255,255,255,0.2);
-      color: white;
-    }
-
-    .form-container input::placeholder,
-    .form-container textarea::placeholder {
+    input::placeholder, textarea::placeholder {
       color: rgba(255,255,255,0.7);
     }
 
-    .form-container input:hover,
-    .form-container textarea:hover,
-    .form-container input:focus,
-    .form-container textarea:focus {
-      background: rgba(255,255,255,0.25);
-      border: 1px solid rgba(255,255,255,0.6);
-      box-shadow: 0 8px 20px rgba(255,255,255,0.2);
-      transform: translateY(-3px);
+    input:focus, textarea:focus {
+      background: rgba(255,255,255,0.28);
+      border-color: rgba(255,255,255,0.7);
     }
 
-    .form-container button {
-      width: 100%;
-      max-width: 320px;
-      padding: 14px 18px;
-      border-radius: 15px;
-      border: none;
-      background: rgba(255,255,255,0.25);
-      color: white;
-      font-weight: bold;
-      font-size: 1rem;
+    input[type="file"] {
+      padding: 10px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
     }
 
-    .form-container button:hover {
+    button {
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
       background: rgba(255,255,255,0.35);
-      box-shadow: 0 8px 25px rgba(255,255,255,0.25);
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
-    @media (max-width: 900px) {
+    #status {
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+
+    /* Mobile optimization */
+    @media (max-width: 768px) {
       .container {
         flex-direction: column;
-        gap: 30px;
+        gap: 25px;
+      }
+
+      .intro h1 {
+        font-size: 2.2rem;
+        text-align: center;
+      }
+
+      .intro p {
+        text-align: center;
+        max-width: 100%;
+      }
+
+      .card {
+        padding: 25px 20px;
+      }
+
+      .social-icons img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
       }
     }
   </style>
 </head>
+
 <body>
+
   <div class="container">
+
     <div class="intro">
       <h1>Something Powerful Is Coming Soon!</h1>
       <p>
         We’re building the next generation hiring platform to simplify how top talent connects with world-class companies.
-        Stay tuned – big things are on the way.
+        Stay tuned — big things are coming.
       </p>
     </div>
 
     <div class="card">
+
       <div class="social-icons">
-        <a href="https://instagram.com/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" /></a>
-        <a href="https://facebook.com/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" /></a>
-        <a href="https://linkedin.com/in/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" /></a>
-        <a href="https://x.com/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X (Twitter)" /></a>
+        <a href="https://instagram.com/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"></a>
+        <a href="https://facebook.com/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"></a>
+        <a href="https://linkedin.com/in/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg"></a>
+        <a href="https://x.com/hirexme" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg"></a>
       </div>
 
       <div class="form-container">
         <h2>Apply Now</h2>
-        <form id="jobForm">
+
+        <form id="jobForm" enctype="multipart/form-data">
           <input type="text" name="name" placeholder="Full Name" required />
           <input type="email" name="email" placeholder="Email Address" required />
           <input type="text" name="position" placeholder="Position You're Applying For" required />
           <textarea name="cover_letter" rows="4" placeholder="Your Cover Letter" required></textarea>
-          <input type="file" name="resume" accept=".pdf,.doc,.docx" />
+          <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
           <button type="submit">Submit Application</button>
         </form>
-        <p id="status" style="margin-top:10px;"></p>
+
+        <p id="status"></p>
       </div>
+
     </div>
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwIqDipF6IP08qwJBhnmSKRA_gt3ffMnB0h06_Q_gh75d_XF1L2vpdfu11ckXM0oX8k/exec";
+    const SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbwoX7EGreB2MU8xdoyGptqVH3Er_DpBiuVuF7iz1pJ7NTpUzrQQqqj8XIQ-7Y9nhG8P/exec";
 
     const form = document.getElementById("jobForm");
     const status = document.getElementById("status");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      status.textContent = "Submitting application...";
 
-      const data = new FormData(form);
-      const params = new URLSearchParams();
-      data.forEach((value, key) => {
-        if (key !== "resume") params.append(key, value); // file handled separately
-      });
+      const formData = new FormData(form);
 
       try {
-        const response = await fetch(SCRIPT_URL, {
+        const res = await fetch(SCRIPT_URL, {
           method: "POST",
-          body: params
+          body: formData
         });
-        const result = await response.json();
+
+        const result = await res.json();
+
         if (result.result === "success") {
-          status.textContent = "Application submitted!";
+          status.textContent = "✅ Application submitted successfully!";
           form.reset();
         } else {
-          status.textContent = "Error: " + result.error;
+          status.textContent = "❌ Error: " + result.error;
         }
       } catch (err) {
-        status.textContent = "Error submitting form. Try again!";
+        status.textContent = "❌ Submission failed. Please try again.";
       }
     });
   </script>
+
 </body>
 </html>
