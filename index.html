@@ -150,7 +150,6 @@
       margin-top: 10px;
     }
 
-    /* Mobile optimization */
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
@@ -210,12 +209,13 @@
       <div class="form-container">
         <h2>Apply Now</h2>
 
-        <form id="jobForm" enctype="multipart/form-data">
+        <!-- Formsubmit form -->
+        <form id="jobForm" method="POST" action="https://formsubmit.co/careers@hirex.me" enctype="multipart/form-data">
           <input type="text" name="name" placeholder="Full Name" required />
           <input type="email" name="email" placeholder="Email Address" required />
           <input type="text" name="position" placeholder="Position You're Applying For" required />
           <textarea name="cover_letter" rows="4" placeholder="Your Cover Letter" required></textarea>
-          <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
+          <input type="file" name="resume" accept=".pdf,.doc,.docx" />
           <button type="submit">Submit Application</button>
         </form>
 
@@ -225,35 +225,38 @@
     </div>
   </div>
 
+  <!-- ========================= -->
+  <!-- AJAX Submit + Button Update -->
+  <!-- ========================= -->
   <script>
-    const SCRIPT_URL =
-      "https://script.google.com/macros/s/AKfycbwoX7EGreB2MU8xdoyGptqVH3Er_DpBiuVuF7iz1pJ7NTpUzrQQqqj8XIQ-7Y9nhG8P/exec";
-
     const form = document.getElementById("jobForm");
     const status = document.getElementById("status");
+    const submitButton = form.querySelector("button[type='submit']");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       status.textContent = "Submitting application...";
+      submitButton.disabled = true;
 
       const formData = new FormData(form);
 
       try {
-        const res = await fetch(SCRIPT_URL, {
+        const res = await fetch(form.action, {
           method: "POST",
-          body: formData
+          body: formData,
         });
 
-        const result = await res.json();
-
-        if (result.result === "success") {
-          status.textContent = "✅ Application submitted successfully!";
-          form.reset();
+        // Formsubmit returns HTML, not JSON
+        if (res.ok) {
+          status.textContent = "";
+          submitButton.textContent = "Application submitted";
         } else {
-          status.textContent = "❌ Error: " + result.error;
+          status.textContent = "❌ Submission failed. Please try again.";
+          submitButton.disabled = false;
         }
       } catch (err) {
         status.textContent = "❌ Submission failed. Please try again.";
+        submitButton.disabled = false;
       }
     });
   </script>
