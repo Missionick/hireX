@@ -153,6 +153,36 @@
         text-align: center;
       }
     }
+
+    /* ========================= */
+    /* VisionOS Success Animation */
+    /* ========================= */
+    .success-message {
+      display: none;
+      text-align: center;
+      animation: visionFade 1.2s ease forwards;
+      backdrop-filter: blur(20px);
+    }
+
+    .success-message h3 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .success-message p {
+      opacity: 0.85;
+    }
+
+    @keyframes visionFade {
+      from {
+        opacity: 0;
+        transform: scale(0.96) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
   </style>
 </head>
 
@@ -178,15 +208,15 @@
     </div>
 
     <div class="form-container">
-      <h2>Apply Now</h2>
 
-      <!-- FORM SUBMIT (NO AJAX) -->
+      <h2 id="formTitle">Apply Now</h2>
+
       <form
+        id="jobForm"
         method="POST"
         action="https://formsubmit.co/careers@hirex.me"
         enctype="multipart/form-data"
       >
-        <!-- Formsubmit settings -->
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_subject" value="New Job Application">
@@ -201,11 +231,33 @@
         <button type="submit">Submit Application</button>
       </form>
 
+      <!-- Success UI -->
+      <div class="success-message" id="successMessage">
+        <h3>Application Submitted</h3>
+        <p>Thank you for applying. Our team will review your application shortly.</p>
+      </div>
+
     </div>
   </div>
 </div>
 
+<!-- ========================= -->
+<!-- Success Detection Script -->
+<!-- ========================= -->
+<script>
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("submitted") === "true") {
+    const form = document.getElementById("jobForm");
+    const success = document.getElementById("successMessage");
+    const title = document.getElementById("formTitle");
+
+    if (form && success) {
+      form.style.display = "none";
+      title.style.display = "none";
+      success.style.display = "block";
+    }
+  }
+</script>
+
 </body>
 </html>
-
-
